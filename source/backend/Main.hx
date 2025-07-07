@@ -1,8 +1,8 @@
-package;
+package backend;
 
 import flixel.FlxGame;
 import openfl.display.Sprite;
-import states.InitState;
+import states.*;
 
 class Main extends Sprite
 {

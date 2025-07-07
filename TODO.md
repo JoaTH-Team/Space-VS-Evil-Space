@@ -1,7 +1,7 @@
 # Todo List (Can be update sometime)
 ## v0.1.0 (Base Release)
 - [ ] Done Sprites
-    - [ ] Player
+    - [X] Player
     - [ ] Enemy Shooter, Laser
     - [ ] Boss For World 1
     - [ ] Select Level
