@@ -97,6 +97,37 @@ class PlayState extends FlxState
 				bullets.remove(bullet);
 				bullet.destroy();
 			}
+			for (bullet in bullets)
+			{
+				if (bullet.x > FlxG.width || bullet.x + bullet.width < 0 || bullet.y > FlxG.height || bullet.y + bullet.height < 0)
+				{
+					remove(bullet);
+					bullets.remove(bullet);
+					bullet.destroy();
+					break;
+				}
+
+				for (enemy in enemies)
+				{
+					if (bullet.overlaps(enemy))
+					{
+						enemy.health -= bullet.power;
+						if (enemy.health >= 0)
+						{
+							CurrentData.PRE_SCORE += enemy.enemyScore;
+							remove(enemy);
+							enemies.remove(enemy);
+							enemy.destroy();
+						}
+
+						remove(bullet);
+						bullets.remove(bullet);
+						bullet.destroy();
+
+						break;
+					}
+				}
+			}
 		}
 	}
 	/**
