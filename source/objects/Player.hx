@@ -23,7 +23,11 @@ class Player extends FlxSprite
         FlxTween.tween(this, {alpha: 0}, 1, {ease: FlxEase.sineInOut, onComplete: function (_) {
             if (trulyDead) {
                 this.kill();
-            }
+				}
+				else
+				{
+					revive();
+				}
         }});
     }
 
