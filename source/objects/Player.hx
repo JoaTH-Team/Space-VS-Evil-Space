@@ -5,9 +5,12 @@ import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import objects.Bullet.BulletType;
 
 class Player extends FlxSprite
 {
+	public static var shootType:BulletType;
+
     public function new(x:Float = 0, y:Float = 0) {
         super(x, y);
         loadGraphic(Paths.images("player"), false);
@@ -23,6 +26,15 @@ class Player extends FlxSprite
             }
         }});
     }
+
+	override function revive()
+	{
+		super.revive();
+
+		FlxTween.tween(this, {alpha: 1}, 1, {
+			ease: FlxEase.sineInOut
+		});
+	}
 
     public var allowMove:Bool = true;
     public var allowBound:Bool = true;

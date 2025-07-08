@@ -12,7 +12,8 @@ class InitState extends FlxState
 
         SaveData.init();
     
-        new FlxTimer().start(1, function (timer:FlxTimer) {
+		new FlxTimer().start(0.25, function(timer:FlxTimer)
+		{
             FlxG.switchState(() -> new PlayState());
         });
     }
