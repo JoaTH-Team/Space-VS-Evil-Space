@@ -1,3 +1,25 @@
-function update(elapsed:Float) {
-    
+function create() {
+    game.curWave = 1;
+    startWave(1);
+}
+
+function wave1() {
+    addEnemy(SHOOTER, FlxG.width - 100, 266.5);
+    addEnemy(SHOOTER, FlxG.width - 75, 288.5);
+    addEnemy(SHOOTER, FlxG.width - 100, 310.5);
+
+    waitForWaveComplete();
+}
+
+function waitForWaveComplete() {
+    if (getEnemyCount() > 0) {
+        wait(1.0, waitForWaveComplete);
+    } else {
+        trace('Wave ' + game.curWave + ' complete!');
+        if (game.curWave < game.maxWave) {
+            nextWave(2.0);
+        } else {
+            trace("ALL WAVES COMPLETE!");
+        }
+    }
 }

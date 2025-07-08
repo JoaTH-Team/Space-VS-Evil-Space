@@ -6,8 +6,11 @@ import flixel.FlxSprite;
 import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
+import flixel.util.FlxTimer;
 import joalor64gh.HScript;
+import objects.Enemy.EnemyType;
 import openfl.Lib;
+import states.PlayState;
 
 using StringTools;
 
@@ -30,6 +33,33 @@ class ScriptsGame extends HScript
 		set('add', FlxG.state.add);
 		set('remove', FlxG.state.remove);
 		set('insert', FlxG.state.insert);
+		// Enemy code
+		set('SHOOTER', EnemyType.SHOOTER);
+		set('LASER_SHOOTER', EnemyType.LASER_SHOOTER);
+		set('addEnemy', function(type:EnemyType, x:Float = 0, y:Float = 0, quantity:Int = 1, xVel:Float = 0, yVel:Float = 0, health:Float = -1)
+		{
+			return cast(FlxG.state, PlayState).addEnemy(type, x, y, quantity, xVel, yVel, health);
+		});
+		set('getEnemies', function()
+		{
+			return cast(FlxG.state, PlayState).enemies;
+		});
+		set('wait', function(seconds:Float, callback:Void->Void)
+		{
+			new FlxTimer().start(seconds, function(_) callback());
+		});
+
+		set('getEnemyCount', function() return cast(FlxG.state, PlayState).enemies.length);
+		set('startWave', function(waveNum:Int) return cast(FlxG.state, PlayState).script.call('wave$waveNum', []));
+		set('nextWave', function(delay:Float = 2.0)
+		{
+			var state:PlayState = cast FlxG.state;
+			new FlxTimer().start(delay, function(_)
+			{
+				state.curWave++;
+				state.script.call('wave${state.curWave}', []);
+			});
+		});
 
 		executeFile(Paths.data(file + '.hxs'));
 	}

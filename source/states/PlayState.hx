@@ -26,6 +26,9 @@ class PlayState extends FlxState
 	public var script:ScriptsGame;
 	public var curScript:String = "level1";
 
+	public var curWave:Int = 1;
+	public var maxWave:Int = 10;
+
 	override public function create()
 	{
 		shootTimer = new FlxTimer();
@@ -40,7 +43,7 @@ class PlayState extends FlxState
 		player = new Player(50, 0);
 		player.screenCenter(Y);
 		add(player);
-		Player.shootType = LITTLE_RANGE;
+		Player.shootType = LINE;
 		super.create();
 
 		gameplayHUD = new GameplayHUD();
@@ -202,6 +205,11 @@ class PlayState extends FlxState
 
 		return createdEnemies;
 	}
+	public function startScriptSequence()
+	{
+		callFunction("startEnemySequence", []);
+	}
+
 	function callFunction(funcName:String, args:Array<Dynamic>)
 	{
 		stage.call(funcName, args);
