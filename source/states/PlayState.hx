@@ -1,5 +1,7 @@
 package states;
 
+import backend.ScriptsGame;
+import backend.ScriptsStage;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.util.FlxTimer;
@@ -11,18 +13,29 @@ import states.stuff.GameplayHUD;
 
 class PlayState extends FlxState
 {
-	var player:Player;
-	var bullets:Array<Bullet> = [];
-	var shootTimer:FlxTimer;
+	public var player:Player;
+	public var bullets:Array<Bullet> = [];
+	public var shootTimer:FlxTimer;
 
-	var enemies:Array<Enemy> = [];
+	public var enemies:Array<Enemy> = [];
 
-	var gameplayHUD:GameplayHUD;
+	public var gameplayHUD:GameplayHUD;
+
+	public var stage:ScriptsStage;
+	public var curStage:String = "world1";
+	public var script:ScriptsGame;
+	public var curScript:String = "level1";
 
 	override public function create()
 	{
 		shootTimer = new FlxTimer();
 		shootTimer.finished = true;
+
+		// init stage, scripts
+		stage = new ScriptsStage(curStage);
+		script = new ScriptsGame('$curStage/scripts/$curScript');
+
+		callFunction("create", []);
 
 		player = new Player(50, 0);
 		player.screenCenter(Y);
@@ -79,9 +92,8 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
+		callFunction("update", [elapsed]);
 		super.update(elapsed);
-		if (FlxG.keys.justReleased.P)
-			addEnemy(LASER_SHOOTER, -3, -1, 1, -100, 0, 30);
 
 		if (player.allowMove && FlxG.keys.pressed.Z && shootTimer.finished)
 		{
@@ -189,5 +201,10 @@ class PlayState extends FlxState
 		}
 
 		return createdEnemies;
+	}
+	function callFunction(funcName:String, args:Array<Dynamic>)
+	{
+		stage.call(funcName, args);
+		script.call(funcName, args);
 	}
 }

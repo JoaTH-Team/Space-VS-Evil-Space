@@ -14,7 +14,7 @@ class Paths
 
 	inline public static function data(name:String)
 	{
-		return file('assets/data/$name');
+		return file('data/$name');
 	}
 
 	inline public static function sounds(name:String)

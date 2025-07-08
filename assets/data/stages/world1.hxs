@@ -1,0 +1,23 @@
+function create() {
+    starBackdrops = new FlxSpriteGroup();
+	for (i in 0...3)
+	{
+		var stardrop = new FlxBackdrop();
+		stardrop.loadGraphic(getStageImage("stars"));
+    	switch (i)
+    	{
+    		case 0:
+    			stardrop.velocity.x = -10;
+    			stardrop.scale.set(0.5, 0.5);
+    		case 1:
+    			stardrop.velocity.x = -30;
+    			stardrop.scale.set(0.7, 0.7);
+    		case 2:
+    			stardrop.velocity.x = -60;
+    	}
+    	stardrop.updateHitbox();
+    	stardrop.setPosition(0, 0);
+    	starBackdrops.add(stardrop);
+    }
+    add(starBackdrops);
+}
