@@ -145,66 +145,25 @@ class PlayState extends FlxState
 			}
 		}
 	}
+
 	/**
-	 * Added enemy to the game
-	 * @param type The type of enemy to spawn
-	 * @param x X position (use -1 for random, -2 for left edge, -3 for right edge)
-	 * @param y Y position (use -1 for random, -2 for top edge, -3 for bottom edge)
-	 * @param quantity How many enemies to spawn (default 1)
-	 * @param xVel Horizontal velocity (0 for stationary)
-	 * @param yVel Vertical velocity (0 for stationary)
-	 * @param health Custom health value (default based on enemy type)
-	 * @return Array<Enemy> The created enemies
+	 * Function to allow add enemy easier
 	 */
-	public function addEnemy(type:EnemyType, x:Float = 0, y:Float = 0, quantity:Int = 1, xVel:Float = 0, yVel:Float = 0, health:Float = -1):Array<Enemy>
+	public function addEnemy(param:Dynamic):Array<Enemy>
 	{
-		var createdEnemies:Array<Enemy> = [];
+		var createdEnemies = [];
 
-		for (i in 0...quantity)
+		function checkNull<T>(value:Null<T>, setter:T->Void)
 		{
-			// Handle special position cases
-			var finalX:Float = switch (x)
-			{
-				case -1: FlxG.random.float(0, FlxG.width - 32);
-				case -2: 0;
-				case -3: FlxG.width - 32;
-				default: x;
-			};
-
-			var finalY:Float = switch (y)
-			{
-				case -1: FlxG.random.float(0, FlxG.height - 32);
-				case -2: 0;
-				case -3: FlxG.height - 32;
-				default: y;
-			};
-
-			// Create enemy
-			var enemy:Enemy = new Enemy(finalX, finalY, type);
-			enemy.velocity.set(xVel, yVel);
-
-			// Set custom health if provided
-			if (health > 0)
-			{
-				enemy.health = health;
-			}
-			else
-			{
-				// Default health based on type
-				enemy.health = switch (type)
-				{
-					case SHOOTER: 10;
-					case LASER_SHOOTER: 20;
-				};
-			}
-
-			enemies.push(enemy);
-			add(enemy);
-			createdEnemies.push(enemy);
+			if (value != null)
+				setter(value);
 		}
+
+		var enemy = new Enemy(0, 0, SHOOTER);
 
 		return createdEnemies;
 	}
+
 	public function startScriptSequence()
 	{
 		callFunction("startEnemySequence", []);

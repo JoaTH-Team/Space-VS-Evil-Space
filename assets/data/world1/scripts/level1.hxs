@@ -4,9 +4,9 @@ function create() {
 }
 
 function wave1() {
-    addEnemy(SHOOTER, FlxG.width - 100, 266.5);
-    addEnemy(SHOOTER, FlxG.width - 75, 288.5);
-    addEnemy(SHOOTER, FlxG.width - 100, 310.5);
+    addEnemy(SHOOTER, FlxG.width - 200, 244.5, 1, -50, );
+    addEnemy(SHOOTER, FlxG.width - 225, 288.5, 1, -50, );
+    addEnemy(SHOOTER, FlxG.width - 200, 332.5, 1, -50, );
 
     waitForWaveComplete();
 }
