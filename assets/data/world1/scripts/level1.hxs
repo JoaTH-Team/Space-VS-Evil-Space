@@ -4,11 +4,74 @@ function create() {
 }
 
 function wave1() {
-    addEnemy(SHOOTER, FlxG.width - 200, 244.5, 1, -50, );
-    addEnemy(SHOOTER, FlxG.width - 225, 288.5, 1, -50, );
-    addEnemy(SHOOTER, FlxG.width - 200, 332.5, 1, -50, );
+    addEnemy(SHOOTER, function (e:Enemy) {
+        e.x = 1000;
+        e.screenCenter(0x10);
+
+        FlxTween.tween(e, {x: 650}, 1);
+    });
+
+    addEnemy(SHOOTER, function (e:Enemy) {
+        e.x = 1000;
+        e.screenCenter(0x10);
+        e.y -= 100;
+
+        FlxTween.tween(e, {x: 650}, 1, {startDelay: 0.25});
+    });
+
+    addEnemy(SHOOTER, function (e:Enemy) {
+        e.x = 1000;
+        e.screenCenter(0x10);
+        e.y += 100;
+
+        FlxTween.tween(e, {x: 650}, 1, {startDelay: 0.5});
+    });
 
     waitForWaveComplete();
+}
+
+function wave2() {
+    var turn:Int = 1;
+
+    FlxG.signals.preUpdate.add(function() {
+        if (getEnemyCount() > 0) {
+            turn += 2;
+        }
+
+        switch (turn) {
+            case 1:
+                addEnemy(SHOOTER, function (e:Enemy) {
+                    e.x = 1000;
+                    e.screenCenter(0x10);
+                    e.scale.set(2, 2);
+                    e.updateHitbox();
+                    e.health = 50;
+
+                    FlxTween.tween(e, {x: 650}, 1);
+                });
+            case 2:
+                addEnemy(SHOOTER, function (e:Enemy) {
+                    e.x = 1000;
+                    e.screenCenter(0x10);
+                    e.scale.set(2, 2);
+                    e.updateHitbox();
+                    e.health = 50;
+
+                    FlxTween.tween(e, {x: 650}, 1);
+                });
+                addEnemy(SHOOTER, function (e:Enemy) {
+                    e.x = 1000;
+                    e.screenCenter(0x10);
+                    e.scale.set(2, 2);
+                    e.updateHitbox();
+                    e.health = 50;
+                    e.y = 200;
+
+                    FlxTween.tween(e, {x: 650}, 1);
+                });       
+                waitForWaveComplete();                         
+        }
+    });
 }
 
 function waitForWaveComplete() {

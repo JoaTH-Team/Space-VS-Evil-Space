@@ -6,9 +6,12 @@ import flixel.FlxSprite;
 import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import joalor64gh.HScript;
 import objects.Enemy.EnemyType;
+import objects.Enemy;
 import openfl.Lib;
 import states.PlayState;
 
@@ -27,6 +30,10 @@ class ScriptsGame extends HScript
         set('FlxText', FlxText);
 		set('FlxSpriteGroup', FlxSpriteGroup);
 		set('FlxBackdrop', FlxBackdrop);
+		set('Enemy', Enemy);
+		set('FlxTimer', FlxTimer);
+		set('FlxTween', FlxTween);
+		set('FlxEase', FlxEase);
 		// Some variable and functions
 		set('import', importFunc);
 		set('game', FlxG.state);
@@ -36,9 +43,9 @@ class ScriptsGame extends HScript
 		// Enemy code
 		set('SHOOTER', EnemyType.SHOOTER);
 		set('LASER_SHOOTER', EnemyType.LASER_SHOOTER);
-		set('addEnemy', function(type:EnemyType, x:Float = 0, y:Float = 0, quantity:Int = 1, xVel:Float = 0, yVel:Float = 0, health:Float = -1)
+		set('addEnemy', function(type:EnemyType, ?setup:Enemy->Void, quantity:Int = 1)
 		{
-			return cast(FlxG.state, PlayState).addEnemy(type, x, y, quantity, xVel, yVel, health);
+			return cast(FlxG.state, PlayState).addEnemy(type, setup, quantity);
 		});
 		set('getEnemies', function()
 		{

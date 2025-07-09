@@ -147,19 +147,33 @@ class PlayState extends FlxState
 	}
 
 	/**
-	 * Function to allow add enemy easier
+	 * Adds enemy with callback for full control
+	 * @param type Enemy type
+	 * @param setup Optional setup callback (enemy:Enemy)->Void
+	 * @param quantity How many to spawn (default 1)
+	 * @return Array<Enemy> created enemies
 	 */
-	public function addEnemy(param:Dynamic):Array<Enemy>
+	public function addEnemy(type:EnemyType, ?setup:Enemy->Void, quantity:Int = 1):Array<Enemy>
 	{
 		var createdEnemies = [];
 
-		function checkNull<T>(value:Null<T>, setter:T->Void)
+		for (i in 0...quantity)
 		{
-			if (value != null)
-				setter(value);
-		}
+			var enemy = new Enemy(FlxG.random.float(0, FlxG.width - 32), FlxG.random.float(0, FlxG.height - 32), type);
 
-		var enemy = new Enemy(0, 0, SHOOTER);
+			enemy.health = switch (type)
+			{
+				case SHOOTER: 10;
+				case LASER_SHOOTER: 20;
+			};
+
+			if (setup != null)
+				setup(enemy);
+
+			add(enemy);
+			enemies.push(enemy);
+			createdEnemies.push(enemy);
+		}
 
 		return createdEnemies;
 	}
