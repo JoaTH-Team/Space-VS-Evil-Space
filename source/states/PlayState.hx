@@ -18,6 +18,7 @@ class PlayState extends FlxState
 	public var shootTimer:FlxTimer;
 
 	public var enemies:Array<Enemy> = [];
+	public var enemiesBullet:Array<Bullet> = [];
 
 	public var gameplayHUD:GameplayHUD;
 
@@ -36,14 +37,15 @@ class PlayState extends FlxState
 
 		// init stage, scripts
 		stage = new ScriptsStage(curStage);
+		player = new Player(50, 0);
+		player.screenCenter(Y);
+		add(player);
+		Player.shootType = LITTLE_RANGE;
+
 		script = new ScriptsGame('$curStage/scripts/$curScript');
 
 		callFunction("create", []);
 
-		player = new Player(50, 0);
-		player.screenCenter(Y);
-		add(player);
-		Player.shootType = LINE;
 		super.create();
 
 		gameplayHUD = new GameplayHUD();
@@ -104,6 +106,15 @@ class PlayState extends FlxState
 			shootTimer.start(0.1);
 		}
 
+		for (eBullet in enemiesBullet)
+		{
+			if (player.overlaps(eBullet))
+			{
+				player.dead();
+				eBullet.kill();
+			}
+		}
+
 		for (bullet in bullets)
 		{
 			if (bullet.x > FlxG.width || bullet.x + bullet.width < 0 || bullet.y > FlxG.height || bullet.y + bullet.height < 0)
@@ -153,19 +164,13 @@ class PlayState extends FlxState
 	 * @param quantity How many to spawn (default 1)
 	 * @return Array<Enemy> created enemies
 	 */
-	public function addEnemy(type:EnemyType, ?setup:Enemy->Void, quantity:Int = 1):Array<Enemy>
+	public function addEnemy(type:String, ?setup:Enemy->Void, quantity:Int = 1):Array<Enemy>
 	{
 		var createdEnemies = [];
 
 		for (i in 0...quantity)
 		{
 			var enemy = new Enemy(FlxG.random.float(0, FlxG.width - 32), FlxG.random.float(0, FlxG.height - 32), type);
-
-			enemy.health = switch (type)
-			{
-				case SHOOTER: 10;
-				case LASER_SHOOTER: 20;
-			};
 
 			if (setup != null)
 				setup(enemy);
@@ -176,11 +181,6 @@ class PlayState extends FlxState
 		}
 
 		return createdEnemies;
-	}
-
-	public function startScriptSequence()
-	{
-		callFunction("startEnemySequence", []);
 	}
 
 	function callFunction(funcName:String, args:Array<Dynamic>)

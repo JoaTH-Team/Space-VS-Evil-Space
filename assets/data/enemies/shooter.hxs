@@ -1,0 +1,25 @@
+var shootTimer:FlxTimer;
+
+function init() {
+    import("objects.Bullet");
+
+    enemy.loadGraphic(Paths.images("enemy_shooter"), false);
+	enemy.health = enemy.enemyScore = 10;
+    shootTimer = new FlxTimer();
+    shootTimer.finished = true;
+}
+
+function update(elapsed:Float) {
+    if (shootTimer.finished) {
+        shootAtPlayer();
+        shootTimer.start(1);
+    }
+}
+
+function shootAtPlayer() {
+    var bullet:Bullet = new Bullet((enemy.x + enemy.width / 2 - 4) + -5, (enemy.y + enemy.height / 2 - 4));
+	bullet.velocity.x = -800;
+    bullet.power = 5;
+	add(bullet);
+	game.enemiesBullet.push(bullet);
+}

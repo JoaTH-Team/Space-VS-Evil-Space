@@ -10,7 +10,6 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import joalor64gh.HScript;
-import objects.Enemy.EnemyType;
 import objects.Enemy;
 import openfl.Lib;
 import states.PlayState;
@@ -21,9 +20,9 @@ class ScriptsGame extends HScript
 {
     public function new(file:String) {
 		super(Paths.data(file + '.hxs'), false);
-		parser.allowJSON = parser.allowTypes = parser.allowMetadata = true;
 
 		// Imported Class
+		set('Math', Math);
         set('FlxG', FlxG);
         set('FlxSprite', FlxSprite);
         set('FlxCamera', FlxCamera);
@@ -34,16 +33,17 @@ class ScriptsGame extends HScript
 		set('FlxTimer', FlxTimer);
 		set('FlxTween', FlxTween);
 		set('FlxEase', FlxEase);
+		set('Paths', Paths);
+
 		// Some variable and functions
 		set('import', importFunc);
 		set('game', FlxG.state);
 		set('add', FlxG.state.add);
 		set('remove', FlxG.state.remove);
 		set('insert', FlxG.state.insert);
+
 		// Enemy code
-		set('SHOOTER', EnemyType.SHOOTER);
-		set('LASER_SHOOTER', EnemyType.LASER_SHOOTER);
-		set('addEnemy', function(type:EnemyType, ?setup:Enemy->Void, quantity:Int = 1)
+		set('addEnemy', function(type:String, ?setup:Enemy->Void, quantity:Int = 1)
 		{
 			return cast(FlxG.state, PlayState).addEnemy(type, setup, quantity);
 		});
@@ -55,7 +55,6 @@ class ScriptsGame extends HScript
 		{
 			new FlxTimer().start(seconds, function(_) callback());
 		});
-
 		set('getEnemyCount', function() return cast(FlxG.state, PlayState).enemies.length);
 		set('startWave', function(waveNum:Int) return cast(FlxG.state, PlayState).script.call('wave$waveNum', []));
 		set('nextWave', function(delay:Float = 2.0)
