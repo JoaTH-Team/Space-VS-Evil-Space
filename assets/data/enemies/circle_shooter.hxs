@@ -1,30 +1,55 @@
+import objects.Bullet;
+
 var shootTimer:FlxTimer;
+var bulletSpeed:Float = 600;
+var bulletCount:Int = 8;
+var currentAngle:Float = 0; // Track rotation angle
+var rotationSpeed:Float = 30; // Degrees per shot
 
 function init() {
-    import("objects.Bullet");
-
     enemy.loadGraphic(Paths.images("enemy_shooter"), false);
-	enemy.health = enemy.enemyScore = 10;
-    shootTimer = new FlxTimer();
-    shootTimer.finished = true;
-}
-
-function update(elapsed:Float) {
-    if (shootTimer.finished) {
-        shootAtPlayer();
-        shootTimer.start(1);
-    }
+    enemy.health = enemy.enemyScore = 25;
+    
+    shootTimer = new FlxTimer().start(0.5, function(_) { // Faster shots for better effect
+        if (enemy.alive) {
+            shootAtPlayer();
+            currentAngle += rotationSpeed; // Increment angle
+        }
+    }, 0);
 }
 
 function shootAtPlayer() {
-    var bullet:Bullet = new Bullet((enemy.x + enemy.width / 2 - 4) + -5, (enemy.y + enemy.height / 2 - 4));
-	bullet.velocity.x = -800;
-    bullet.power = 5;
-	add(bullet);
-	game.enemiesBullet.push(bullet);
+    var centerX = enemy.x + enemy.width/2 - 4;
+    var centerY = enemy.y + enemy.height/2 - 4;
+    
+    // Convert current angle to radians
+    var angleRad = currentAngle * Math.PI / 180;
+    
+    // Create bullets in rotating pattern
+    for (i in 0...bulletCount) {
+        // Calculate direction for this bullet
+        var bulletAngle = angleRad + (i * (2 * Math.PI / bulletCount));
+        var dirX = Math.cos(bulletAngle);
+        var dirY = Math.sin(bulletAngle);
+        
+        var bullet = new Bullet(centerX, centerY);
+        bullet.power = 5;
+        bullet.velocity.set(dirX * bulletSpeed, dirY * bulletSpeed);
+        
+        // Rotate bullet sprite to face direction
+        bullet.angle = bulletAngle * 180 / Math.PI;
+        
+        add(bullet);
+        game.enemiesBullet.push(bullet);
+    }
+}
 
-    var bullet:Bullet = new Bullet((enemy.x + enemy.width / 2 - 4) + -5, (enemy.y + enemy.height / 2 - 4));
-    bullet.power = 5;
-	add(bullet);
-	game.enemiesBullet.push(bullet);
+function cleanUp() {
+    if (shootTimer != null) {
+        shootTimer.cancel();
+    }
+}
+
+function destroy() {
+    cleanUp();
 }

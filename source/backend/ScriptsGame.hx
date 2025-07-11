@@ -1,5 +1,6 @@
 package backend;
 
+import crowplexus.iris.Iris;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -9,19 +10,18 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
-import joalor64gh.HScript;
 import objects.Enemy;
-import openfl.Lib;
 import states.PlayState;
+import sys.io.File;
 
 using StringTools;
 
-class ScriptsGame extends HScript
+class ScriptsGame extends Iris
 {
     public function new(file:String) {
-		super(Paths.data(file + '.hxs'), false);
+		super(File.getContent(Paths.data('$file.hxs')));
 
-		// Imported Class
+		// Imported
 		set('Math', Math);
         set('FlxG', FlxG);
         set('FlxSprite', FlxSprite);
@@ -36,7 +36,6 @@ class ScriptsGame extends HScript
 		set('Paths', Paths);
 
 		// Some variable and functions
-		set('import', importFunc);
 		set('game', FlxG.state);
 		set('add', FlxG.state.add);
 		set('remove', FlxG.state.remove);
@@ -66,27 +65,12 @@ class ScriptsGame extends HScript
 				state.script.call('wave${state.curWave}', []);
 			});
 		});
-
-		executeFile(Paths.data(file + '.hxs'));
 	}
 
-	function importFunc(daClass:String, ?asDa:String)
+	override function call(fun:String, ?args:Array<Dynamic>):IrisCall
 	{
-		final splitClassName = [for (e in daClass.split('.')) e.trim()];
-		final className = splitClassName.join('.');
-		final daClassObj:Class<Dynamic> = Type.resolveClass(className);
-		final daEnum:Enum<Dynamic> = Type.resolveEnum(className);
-
-		if (daClassObj == null && daEnum == null)
-			Lib.application.window.alert('Class / Enum at $className does not exist.', 'HScript Error!');
-		else if (daEnum != null)
-		{
-			var daEnumField = {};
-			for (daConstructor in daEnum.getConstructors())
-				Reflect.setField(daEnumField, daConstructor, daEnum.createByName(daConstructor));
-			set(asDa != null && asDa != '' ? asDa : splitClassName[splitClassName.length - 1], daEnumField);
-		}
-		else
-			set(asDa != null && asDa != '' ? asDa : splitClassName[splitClassName.length - 1], daClassObj);
+		if (!exists(fun) || fun == null)
+			return null;
+		return super.call(fun, args);
 	}
 }

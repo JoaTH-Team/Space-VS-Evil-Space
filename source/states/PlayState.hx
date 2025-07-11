@@ -40,7 +40,7 @@ class PlayState extends FlxState
 		player = new Player(50, 0);
 		player.screenCenter(Y);
 		add(player);
-		Player.shootType = LITTLE_RANGE;
+		Player.shootType = LINE;
 
 		script = new ScriptsGame('$curStage/scripts/$curScript');
 
@@ -58,26 +58,28 @@ class PlayState extends FlxState
 		{
 			case LINE:
 				var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 25, (player.y + player.height / 2 - 4) + 2);
+				bullet.power = 2;
 				add(bullet);
 				bullets.push(bullet);
 				var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 5, (player.y + player.height / 2 - 4) + 20);
-				bullet.power = 5;
+				bullet.power = 1;
 				add(bullet);
 				bullets.push(bullet);
 
 				var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 5, (player.y + player.height / 2 - 4) + -14);
-				bullet.power = 5;
+				bullet.power = 1;
 				add(bullet);
 				bullets.push(bullet);
 			case LITTLE_RANGE:
 				var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 25, (player.y + player.height / 2 - 4) + 2);
+				bullet.power = 2;
 				add(bullet);
 				bullets.push(bullet);
 				for (i in 0...2)
 				{
 					var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 25, (player.y + player.height / 2 - 4) + 2);
 					bullet.velocity.y = -40 * i;
-					bullet.power = 5;
+					bullet.power = 1;
 					bullet.angle = -40 * i;
 					add(bullet);
 					bullets.push(bullet);
@@ -87,7 +89,7 @@ class PlayState extends FlxState
 				{
 					var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 25, (player.y + player.height / 2 - 4) + 2);
 					bullet.velocity.y = 40 * i;
-					bullet.power = 5;
+					bullet.power = 1;
 					bullet.angle = 40 * i;
 					add(bullet);
 					bullets.push(bullet);
@@ -138,12 +140,16 @@ class PlayState extends FlxState
 					if (bullet.overlaps(enemy))
 					{
 						enemy.health -= bullet.power;
-						if (enemy.health >= 0)
+						if (enemy.health <= 0)
 						{
 							CurrentData.PRE_SCORE += enemy.enemyScore;
 							remove(enemy);
 							enemies.remove(enemy);
 							enemy.destroy();
+						}
+						else
+						{
+							enemy.hit();
 						}
 
 						remove(bullet);
@@ -187,5 +193,11 @@ class PlayState extends FlxState
 	{
 		stage.call(funcName, args);
 		script.call(funcName, args);
+	}
+	override function destroy()
+	{
+		super.destroy();
+
+		callFunction("destroy", []);
 	}
 }

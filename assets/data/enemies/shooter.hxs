@@ -1,19 +1,11 @@
+import objects.Bullet;
+
 var shootTimer:FlxTimer;
 
 function init() {
-    import("objects.Bullet");
-
     enemy.loadGraphic(Paths.images("enemy_shooter"), false);
 	enemy.health = enemy.enemyScore = 10;
-    shootTimer = new FlxTimer();
-    shootTimer.finished = true;
-}
-
-function update(elapsed:Float) {
-    if (shootTimer.finished) {
-        shootAtPlayer();
-        shootTimer.start(1);
-    }
+    shootTimer = new FlxTimer().start(1, function (_) shootAtPlayer(), 0);
 }
 
 function shootAtPlayer() {
@@ -22,4 +14,14 @@ function shootAtPlayer() {
     bullet.power = 5;
 	add(bullet);
 	game.enemiesBullet.push(bullet);
+}
+
+function cleanUp() {
+    if (shootTimer != null) {
+        shootTimer.cancel();
+    }
+}
+
+function destroy() {
+    cleanUp();
 }
