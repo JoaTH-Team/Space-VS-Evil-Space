@@ -2,15 +2,15 @@ import objects.Bullet;
 
 var shootTimer:FlxTimer;
 var bulletSpeed:Float = 600;
-var bulletCount:Int = 8;
+var bulletCount:Int = 16;
 var currentAngle:Float = 0; // Track rotation angle
 var rotationSpeed:Float = 60; // Degrees per shot
 
 function init() {
     enemy.loadGraphic(Paths.images("enemy_shooter"), false);
-    enemy.health = enemy.enemyScore = 25;
+    enemy.health = enemy.enemyScore = 45;
     
-    shootTimer = new FlxTimer().start(0.5, function(_) { // Faster shots for better effect
+    shootTimer = new FlxTimer().start(0.15, function(_) { // Faster shots for better effect
         if (enemy.alive) {
             shootAtPlayer();
             currentAngle += rotationSpeed; // Increment angle

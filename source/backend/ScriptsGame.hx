@@ -1,6 +1,7 @@
 package backend;
 
 import crowplexus.iris.Iris;
+import crowplexus.iris.IrisConfig.RawIrisConfig;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -19,7 +20,9 @@ using StringTools;
 class ScriptsGame extends Iris
 {
     public function new(file:String) {
-		super(File.getContent(Paths.data('$file.hxs')));
+		final rawConfig:RawIrisConfig = {name: '$file.hxs'};
+
+		super(File.getContent(Paths.data('$file.hxs')), rawConfig);
 
 		// Imported
 		set('Math', Math);

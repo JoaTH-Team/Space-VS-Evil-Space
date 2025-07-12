@@ -1,4 +1,0 @@
-function init() {
-    enemy.makeGraphic(32, 32, 0xFF0000);
-    enemy.health = enemy.enemyScore = 20;
-}

@@ -1,6 +1,8 @@
 function create() {
     game.curWave = 1;
     startWave(1);
+
+    FlxG.timeScale = 3;
 }
 
 function wave1() {
@@ -99,24 +101,37 @@ function wave3() {
 }
 
 function wave4() {
-    addEnemy("circle_shooter_spin", function(e:Enemy) {
+    addEnemy("circle_shooter_even_harder", function(e:Enemy) {
         e.x = 1000;
         e.screenCenter(0x10);
-        e.scale.set(1.5, 1.5);
+        e.scale.set(2, 2);
         
-        var speed = 100;
-        e.velocity.x = speed;
-        var baseX = 350;
-
-        FlxTween.tween(e, {x: 650}, 1, {onComplete: function (_) {
-            FlxG.signals.preUpdate.add(function () {
-                if (e.x <= baseX - 100) e.velocity.x = speed;
-                if (e.x >= baseX + 350) e.velocity.x = -speed;
-            });
-        }});
+        FlxTween.tween(e, {x: 650}, 1);
     });
 
     waitForWaveComplete();
+}
+
+function wave5() {
+    addEnemy("laser_shooter_x", function(e:Enemy) {
+        e.x = 1000;
+        e.screenCenter(0x10);
+        e.scale.set(2, 2);
+        
+        FlxTween.tween(e, {x: 650}, 1);
+    });
+
+    waitForWaveComplete();
+}
+
+function wave6() {
+    addEnemy("laser_shooter_y", function(e:Enemy) {
+        e.x = 1000;
+        e.y = 20;
+        e.scale.set(2, 2);
+        
+        FlxTween.tween(e, {x: 650}, 1);
+    });
 }
 
 function waitForWaveComplete() {

@@ -1,0 +1,111 @@
+import objects.Bullet;
+
+var shootTimer:FlxTimer;
+var laserTimer:FlxTimer;
+var isShootingLaser:Bool = false;
+var laserBeam:FlxSprite;
+
+function init() {
+    enemy.loadGraphic(Paths.images("enemy_shooter"), false);
+    enemy.health = enemy.enemyScore = 50;
+    
+    laserBeam = new FlxSprite().makeGraphic(4, FlxG.height, 0xFFFF0000); // Now tall instead of wide
+    laserBeam.visible = false;
+    laserBeam.kill();
+    laserBeam.exists = false;
+    add(laserBeam);
+    
+    startAttackCycle();
+}
+
+function startAttackCycle() {
+    if (shootTimer != null) shootTimer.cancel();
+    
+    shootTimer = new FlxTimer().start(1, function(t:FlxTimer) {
+        if (enemy.alive && enemy.exists) {
+            startLaserBeam();
+            
+            new FlxTimer().start(2, function(_) {
+                stopLaserBeam();
+                
+                // Short cooldown before next attack
+                new FlxTimer().start(1, function(_) {
+                    if (enemy.alive && enemy.exists) {
+                        startAttackCycle();
+                    }
+                });
+            });
+        }
+    });
+}
+
+function startLaserBeam() {
+    isShootingLaser = true;
+    
+    laserBeam.x = enemy.x + enemy.width/2 - 2;
+    laserBeam.y = enemy.y + enemy.height;
+    laserBeam.height = FlxG.height - laserBeam.y;
+    laserBeam.origin.set(2, 0);
+    
+    laserBeam.revive();
+    laserBeam.exists = true;
+    laserBeam.visible = true;
+    
+    FlxTween.tween(laserBeam, {alpha: 0}, 0.1, {
+        type: FlxTween.PINGPONG,
+        startDelay: 0.1,
+        repeatDelay: 0.1,
+        onComplete: function(_) {
+            if (laserBeam != null) {
+                laserBeam.alpha = 1;
+            }
+        }
+    });
+}
+
+function stopLaserBeam() {
+    isShootingLaser = false;
+    
+    if (laserBeam == null || !laserBeam.exists) return;
+    
+    FlxTween.tween(laserBeam, {alpha: 0}, 0.2, {
+        onComplete: function(_) {
+            if (laserBeam != null) {
+                laserBeam.kill();
+                laserBeam.exists = false;
+                laserBeam.visible = false;
+                laserBeam.alpha = 1;
+            }
+        }
+    });
+}
+
+function update(elapsed:Float) {
+    if (isShootingLaser && laserBeam != null && laserBeam.exists) {
+        laserBeam.x = enemy.x + enemy.width/2 - 2;
+        laserBeam.height = FlxG.height - (enemy.y + enemy.height);
+        
+        if (game.player.overlaps(laserBeam)) {
+            game.player.dead();
+        }
+    }
+}
+
+function cleanUp() {
+    if (shootTimer != null) {
+        shootTimer.cancel();
+        shootTimer.destroy();
+    }
+    if (laserTimer != null) {
+        laserTimer.cancel();
+        laserTimer.destroy();
+    }
+    if (laserBeam != null) {
+        remove(laserBeam);
+        laserBeam.destroy();
+    }
+}
+
+function destroy() {
+    cleanUp();
+}
