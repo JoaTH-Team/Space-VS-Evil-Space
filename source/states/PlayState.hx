@@ -26,6 +26,8 @@ class PlayState extends FlxState
 	public var curStage:String = "world1";
 	public var script:ScriptsGame;
 	public var curScript:String = "level1";
+	public var shootScript:ScriptsGame;
+	public var curShootScript:String = "little_range";
 
 	public var curWave:Int = 1;
 	public var maxWave:Int = 10;
@@ -37,12 +39,13 @@ class PlayState extends FlxState
 
 		// init stage, scripts
 		stage = new ScriptsStage(curStage);
-		player = new Player(50, 0);
-		player.screenCenter(Y);
+		player = new Player(0, 0);
+		player.screenCenter(X);
 		add(player);
 		Player.shootType = LINE;
 
 		script = new ScriptsGame('$curStage/scripts/$curScript');
+		shootScript = new ScriptsGame('shoot_type/$curShootScript');
 
 		callFunction("create", []);
 
@@ -54,47 +57,7 @@ class PlayState extends FlxState
 
 	function shootFire()
 	{
-		switch (Player.shootType)
-		{
-			case LINE:
-				var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 25, (player.y + player.height / 2 - 4) + 2);
-				bullet.power = 2;
-				add(bullet);
-				bullets.push(bullet);
-				var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 5, (player.y + player.height / 2 - 4) + 20);
-				bullet.power = 1;
-				add(bullet);
-				bullets.push(bullet);
-
-				var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 5, (player.y + player.height / 2 - 4) + -14);
-				bullet.power = 1;
-				add(bullet);
-				bullets.push(bullet);
-			case LITTLE_RANGE:
-				var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 25, (player.y + player.height / 2 - 4) + 2);
-				bullet.power = 2;
-				add(bullet);
-				bullets.push(bullet);
-				for (i in 0...2)
-				{
-					var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 25, (player.y + player.height / 2 - 4) + 2);
-					bullet.velocity.y = -40 * i;
-					bullet.power = 1;
-					bullet.angle = -40 * i;
-					add(bullet);
-					bullets.push(bullet);
-				}
-
-				for (i in 0...2)
-				{
-					var bullet:Bullet = new Bullet((player.x + player.width / 2 - 4) + 25, (player.y + player.height / 2 - 4) + 2);
-					bullet.velocity.y = 40 * i;
-					bullet.power = 1;
-					bullet.angle = 40 * i;
-					add(bullet);
-					bullets.push(bullet);
-				}
-		}
+		shootScript.call("shoot", [player.x + player.width / 2 - 4, player.y + player.height / 2 - 4, bullets, this]);
 	}
 
 	override public function update(elapsed:Float)
@@ -124,40 +87,30 @@ class PlayState extends FlxState
 				remove(bullet);
 				bullets.remove(bullet);
 				bullet.destroy();
+				continue;
 			}
-			for (bullet in bullets)
+
+			for (enemy in enemies)
 			{
-				if (bullet.x > FlxG.width || bullet.x + bullet.width < 0 || bullet.y > FlxG.height || bullet.y + bullet.height < 0)
+				if (bullet.overlaps(enemy))
 				{
+					enemy.health -= bullet.power;
+					if (enemy.health <= 0)
+					{
+						CurrentData.PRE_SCORE += enemy.enemyScore;
+						remove(enemy);
+						enemies.remove(enemy);
+						enemy.destroy();
+					}
+					else
+					{
+						enemy.hit();
+					}
+
 					remove(bullet);
 					bullets.remove(bullet);
 					bullet.destroy();
 					break;
-				}
-
-				for (enemy in enemies)
-				{
-					if (bullet.overlaps(enemy))
-					{
-						enemy.health -= bullet.power;
-						if (enemy.health <= 0)
-						{
-							CurrentData.PRE_SCORE += enemy.enemyScore;
-							remove(enemy);
-							enemies.remove(enemy);
-							enemy.destroy();
-						}
-						else
-						{
-							enemy.hit();
-						}
-
-						remove(bullet);
-						bullets.remove(bullet);
-						bullet.destroy();
-
-						break;
-					}
 				}
 			}
 		}
@@ -193,6 +146,7 @@ class PlayState extends FlxState
 	{
 		stage.call(funcName, args);
 		script.call(funcName, args);
+		shootScript.call(funcName, args);
 	}
 	override function destroy()
 	{

@@ -1,0 +1,24 @@
+import objects.Bullet;
+
+function shoot(x:Float, y:Float, bullets:Array<Bullet>, state:PlayState)
+{
+    // At Center
+    var bullet = new Bullet(x, y + 5);
+    bullet.velocity.set(0, -800);
+    bullet.power = 2;
+    add(bullet);
+    bullets.push(bullet);
+
+    // Left/Right Side
+    var bullet = new Bullet(x - 15, y - 15);
+    bullet.velocity.set(-35, -800);
+    bullet.power = 1;
+    add(bullet);
+    bullets.push(bullet);
+
+    var bullet = new Bullet(x + 15, y - 15);
+    bullet.velocity.set(35, -800);
+    bullet.power = 1;
+    add(bullet);
+    bullets.push(bullet);
+}
