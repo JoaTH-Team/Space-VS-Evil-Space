@@ -39,7 +39,7 @@ class PlayState extends FlxState
 
 		// init stage, scripts
 		stage = new ScriptsStage(curStage);
-		player = new Player(0, 0);
+		player = new Player(0, FlxG.height - 100);
 		player.screenCenter(X);
 		add(player);
 		Player.shootType = LINE;
