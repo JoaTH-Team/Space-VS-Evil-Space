@@ -10,6 +10,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import objects.Enemy;
 import states.PlayState;
@@ -37,6 +38,7 @@ class ScriptsGame extends Iris
 		set('FlxTween', FlxTween);
 		set('FlxEase', FlxEase);
 		set('Paths', Paths);
+		set('FlxColor', getFlxColor());
 
 		// Some variable and functions
 		set('game', FlxG.state);
@@ -76,4 +78,32 @@ class ScriptsGame extends Iris
 			return null;
 		return super.call(fun, args);
 	}
+	public function getFlxColor()
+		return {
+			"BLACK": FlxColor.BLACK,
+			"BLUE": FlxColor.BLUE,
+			"BROWN": FlxColor.BROWN,
+			"CYAN": FlxColor.CYAN,
+			"GRAY": FlxColor.GRAY,
+			"GREEN": FlxColor.GREEN,
+			"LIME": FlxColor.LIME,
+			"MAGENTA": FlxColor.MAGENTA,
+			"ORANGE": FlxColor.ORANGE,
+			"PINK": FlxColor.PINK,
+			"PURPLE": FlxColor.PURPLE,
+			"RED": FlxColor.RED,
+			"TRANSPARENT": FlxColor.TRANSPARENT,
+			"WHITE": FlxColor.WHITE,
+			"YELLOW": FlxColor.YELLOW,
+			"add": FlxColor.add,
+			"fromCMYK": FlxColor.fromCMYK,
+			"fromHSB": FlxColor.fromHSB,
+			"fromHSL": FlxColor.fromHSL,
+			"fromInt": FlxColor.fromInt,
+			"fromRGB": FlxColor.fromRGB,
+			"fromRGBFloat": FlxColor.fromRGBFloat,
+			"fromString": FlxColor.fromString,
+			"interpolate": FlxColor.interpolate,
+			"to24Bit": function(color:Int) return color & 0xffffff
+		};
 }

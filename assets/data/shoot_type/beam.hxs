@@ -1,0 +1,25 @@
+import objects.Bullet;
+import flixel.FlxSprite;
+
+function shoot(x:Float, y:Float, bullets:Array<Bullet>, state:PlayState)
+{
+    var laser = new Bullet(x - 5, y - 10);
+    laser.velocity.set(0, -1200);
+    laser.power = 4;
+    laser.scale.set(1.5, 1.8);
+    laser.color = FlxColor.CYAN;
+    laser.alpha = 0.9;
+    laser.makeGraphic(4, 16, FlxColor.CYAN);
+    add(laser);
+    bullets.push(laser);
+
+    var laser = new Bullet(x + 10, y - 10);
+    laser.velocity.set(0, -1200);
+    laser.power = 4;
+    laser.scale.set(1.5, 1.8);
+    laser.color = FlxColor.CYAN;
+    laser.alpha = 0.9;
+    laser.makeGraphic(4, 16, FlxColor.CYAN);
+    add(laser);
+    bullets.push(laser);
+}

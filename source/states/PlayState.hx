@@ -27,7 +27,7 @@ class PlayState extends FlxState
 	public var script:ScriptsGame;
 	public var curScript:String = "level1";
 	public var shootScript:ScriptsGame;
-	public var curShootScript:String = "little_range";
+	public var curShootScript:String = "beam";
 
 	public var curWave:Int = 1;
 	public var maxWave:Int = 10;
