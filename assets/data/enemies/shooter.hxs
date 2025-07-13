@@ -9,8 +9,8 @@ function init() {
 }
 
 function shootAtPlayer() {
-    var bullet:Bullet = new Bullet((enemy.x + enemy.width / 2 - 4) + -5, (enemy.y + enemy.height / 2 - 4));
-	bullet.velocity.x = -800;
+    var bullet:Bullet = new Bullet((enemy.x + enemy.width / 2 - 4), (enemy.y + enemy.height / 2 - 4));
+    bullet.velocity.set(0, 800);
     bullet.power = 5;
 	add(bullet);
 	game.enemiesBullet.push(bullet);

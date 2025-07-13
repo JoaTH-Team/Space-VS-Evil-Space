@@ -1,24 +1,41 @@
 import objects.Bullet;
 
-function shoot(x:Float, y:Float, bullets:Array<Bullet>, state:PlayState)
+function shoot(x:Float, y:Float, bullets:Array<Bullet>, state:PlayState) 
 {
-    // At Center
-    var bullet = new Bullet(x, y + 5);
-    bullet.velocity.set(0, -800);
-    bullet.power = 2;
-    add(bullet);
-    bullets.push(bullet);
+    var centerBullet = new Bullet(x, y - 10);
+    centerBullet.velocity.set(0, -900);
+    centerBullet.power = 3;
+    centerBullet.scale.set(1.3, 1.3);
+    state.add(centerBullet);
+    bullets.push(centerBullet);
 
-    // Left/Right Side
-    var bullet = new Bullet(x - 15, y - 15);
-    bullet.velocity.set(-35, -800);
-    bullet.power = 1;
-    add(bullet);
-    bullets.push(bullet);
+    var bulletCount = 2;
+    var maxSpread = 15;
+    var speed = 800;
+    
+    for (i in 1...bulletCount + 1) {
+        // Left
+        var leftAngle = -maxSpread * (i / bulletCount);
+        var leftBullet = new Bullet(x - 5, y);
+        leftBullet.velocity.set(
+            Math.sin(leftAngle * Math.PI / 180) * speed,
+            Math.cos(leftAngle * Math.PI / 180) * -speed
+        );
+        leftBullet.power = 1;
+        leftBullet.angle = leftAngle;
+        state.add(leftBullet);
+        bullets.push(leftBullet);
 
-    var bullet = new Bullet(x + 15, y - 15);
-    bullet.velocity.set(35, -800);
-    bullet.power = 1;
-    add(bullet);
-    bullets.push(bullet);
+        // Right
+        var rightAngle = maxSpread * (i / bulletCount);
+        var rightBullet = new Bullet(x + 5, y);
+        rightBullet.velocity.set(
+            Math.sin(rightAngle * Math.PI / 180) * speed,
+            Math.cos(rightAngle * Math.PI / 180) * -speed
+        );
+        rightBullet.power = 1;
+        rightBullet.angle = rightAngle;
+        state.add(rightBullet);
+        bullets.push(rightBullet);
+    }
 }

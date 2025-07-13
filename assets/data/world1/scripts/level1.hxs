@@ -1,137 +1,156 @@
 function create() {
     game.curWave = 1;
     startWave(1);
-
-    FlxG.timeScale = 3;
 }
 
 function wave1() {
     addEnemy("shooter", function (e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
+        e.y = -500;
+        e.screenCenter(0x01);
 
-        FlxTween.tween(e, {x: 650}, 1);
-    });
-
-    addEnemy("shooter", function (e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
-        e.y -= 100;
-
-        FlxTween.tween(e, {x: 650}, 1, {startDelay: 0.25});
-    });
-
-    addEnemy("shooter", function (e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
-        e.y += 100;
-
-        FlxTween.tween(e, {x: 650}, 1, {startDelay: 0.5});
+        FlxTween.tween(e, {y: 100}, 1);
     });
 
     waitForWaveComplete();
 }
 
 function wave2() {
-    addEnemy("circle_shooter", function (e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
-        e.scale.set(2, 2);
-        e.updateHitbox();
-        e.health = 50;
-        e.y += 25;
+    addEnemy("shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x -= 100;
 
-        FlxTween.tween(e, {x: 500}, 1);
+        FlxTween.tween(e, {y: 100}, 1);
+    });
+
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 100}, 1);
+    });
+
+    addEnemy("shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x += 100;
+
+        FlxTween.tween(e, {y: 100}, 1);
     });
 
     waitForWaveComplete();
 }
 
 function wave3() {
-    addEnemy("circle_shooter", function(e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
-        e.scale.set(1.5, 1.5);
-        
-        FlxTween.tween(e, {x: 650}, 1);
-        
-        var speed = 100;
-        e.velocity.y = speed;
-        var baseY = 288.5;
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x -= 100;
 
-        FlxG.signals.preUpdate.add(function () {
-            if (e.y <= baseY - 100) e.velocity.y = speed;
-            if (e.y >= baseY + 100) e.velocity.y = -speed;
-        });
+        FlxTween.tween(e, {y: 100}, 1);
     });
 
-    addEnemy("shooter", function(e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
-        
-        FlxTween.tween(e, {x: 650}, 1);
-        
-        var speed = 100;
-        e.velocity.y = speed;
-        var baseY = 288.5;
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x += 100;
 
-        FlxG.signals.preUpdate.add(function () {
-            if (e.y <= baseY - 200) e.velocity.y = speed;
-            if (e.y >= baseY + 200) e.velocity.y = -speed;
-        });
-    });
-
-    addEnemy("shooter", function(e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
-        
-        FlxTween.tween(e, {x: 650}, 1);
-        
-        var speed = 125;
-        e.velocity.y = speed;
-        var baseY = 288.5;
-
-        FlxG.signals.preUpdate.add(function () {
-            if (e.y <= baseY - 300) e.velocity.y = speed;
-            if (e.y >= baseY + 300) e.velocity.y = -speed;
-        });
+        FlxTween.tween(e, {y: 100}, 1);
     });
 
     waitForWaveComplete();
 }
 
 function wave4() {
-    addEnemy("circle_shooter_even_harder", function(e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
-        e.scale.set(2, 2);
-        
-        FlxTween.tween(e, {x: 650}, 1);
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x -= 100;
+
+        FlxTween.tween(e, {y: 150}, 1);
+    });
+
+    addEnemy("circle_shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 100}, 1);
+    });
+
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x += 100;
+
+        FlxTween.tween(e, {y: 150}, 1);
     });
 
     waitForWaveComplete();
 }
 
 function wave5() {
-    addEnemy("laser_shooter_x", function(e:Enemy) {
-        e.x = 1000;
-        e.screenCenter(0x10);
-        e.scale.set(2, 2);
-        
-        FlxTween.tween(e, {x: 650}, 1);
+    addEnemy("circle_shooter_even_harder", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 100}, 1);
     });
 
     waitForWaveComplete();
 }
 
 function wave6() {
-    addEnemy("laser_shooter_y", function(e:Enemy) {
-        e.x = 1000;
-        e.y = 20;
-        e.scale.set(2, 2);
-        
-        FlxTween.tween(e, {x: 650}, 1);
+    addEnemy("laser_shooter_y", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x -= 100;
+
+        FlxTween.tween(e, {y: 150}, 1);
     });
+
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 100}, 1);
+    });
+
+    addEnemy("laser_shooter_y", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x += 100;
+
+        FlxTween.tween(e, {y: 150}, 1);
+    });
+
+    waitForWaveComplete();
+}
+
+function wave7() {
+    addEnemy("circle_shooter_even_harder", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 150}, 1);
+    });
+
+    addEnemy("shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 200}, 1, {onComplete: function (_) {
+            var speed = 100;
+            e.velocity.x = speed;
+            var baseX = e.x;
+
+            FlxG.signals.preUpdate.add(function () {
+                if (e.x <= baseX - 100) e.velocity.x = speed;
+                if (e.x >= baseX + 100) e.velocity.x = -speed;
+            });
+        }});
+    });
+
+    waitForWaveComplete();
 }
 
 function waitForWaveComplete() {
@@ -140,7 +159,7 @@ function waitForWaveComplete() {
     } else {
         trace('Wave ' + game.curWave + ' complete!');
         if (game.curWave < game.maxWave) {
-            nextWave(2.0);
+            nextWave(1.0);
         } else {
             trace("ALL WAVES COMPLETE!");
         }
