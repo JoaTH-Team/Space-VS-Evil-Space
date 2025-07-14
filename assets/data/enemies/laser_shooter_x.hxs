@@ -85,7 +85,7 @@ function update(elapsed:Float) {
         laserBeam.y = enemy.y + enemy.height/2 - 2;
         
         if (game.player.overlaps(laserBeam)) {
-            game.player.dead();
+            game.player.hit(1);
         }
     }
 }

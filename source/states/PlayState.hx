@@ -57,7 +57,7 @@ class PlayState extends FlxState
 
 	function shootFire()
 	{
-		shootScript.call("shoot", [player.x + player.width / 2 - 4, player.y + player.height / 2 - 4, bullets, this]);
+		shootScript.call("shoot", [player.x + player.width / 2 - 4, player.y + player.height / 2 - 4, bullets]);
 	}
 
 	override public function update(elapsed:Float)
@@ -75,8 +75,19 @@ class PlayState extends FlxState
 		{
 			if (player.overlaps(eBullet))
 			{
-				player.dead();
+				CurrentData.HEALTH -= eBullet.power;
+
+				@:privateAccess
+				gameplayHUD.healthPlayer = CurrentData.HEALTH;
+
 				eBullet.kill();
+				remove(eBullet);
+				enemiesBullet.remove(eBullet);
+
+				if (CurrentData.HEALTH <= 0)
+				{
+					player.dead();
+				}
 			}
 		}
 

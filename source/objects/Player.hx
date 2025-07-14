@@ -5,6 +5,9 @@ import flixel.FlxSprite;
 import flixel.math.FlxMath;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
+import global.CurrentData;
 import objects.Bullet.BulletType;
 
 class Player extends FlxSprite
@@ -37,6 +40,27 @@ class Player extends FlxSprite
 		});
 	}
 
+	var invulnerable:Bool = false;
+	var invulnerableTimer:FlxTimer;
+
+	public function hit(amount:Int = 0)
+	{
+		if (invulnerable)
+			return;
+
+		CurrentData.HEALTH -= amount;
+		invulnerable = true;
+
+		FlxTween.color(this, 0.1, FlxColor.RED, FlxColor.WHITE, {
+			ease: FlxEase.sineInOut
+		});
+
+		invulnerableTimer = new FlxTimer().start(1, function(_)
+		{
+			invulnerable = false;
+		});
+	}
+
     public var allowMove:Bool = true;
     public var allowBound:Bool = true;
 
@@ -45,10 +69,10 @@ class Player extends FlxSprite
 
 		if (allowMove)
 		{
-			var speed = 150;
+			var speed = 175;
 			if (FlxG.keys.pressed.SHIFT)
 			{
-				speed = 75;
+				speed = 100;
 			}
 
 			if (FlxG.keys.pressed.LEFT || FlxG.keys.pressed.RIGHT)

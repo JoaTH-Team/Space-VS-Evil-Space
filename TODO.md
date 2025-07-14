@@ -21,7 +21,8 @@
     - [ ] Have 5 Phase
     - [ ] Can Fire, Do Laser (As Setup)
 - [ ] Done Code UI
-    - [ ] Display Score, Player Health as Text
+    - [X] Display Score as Text
+    - [X] Display Player Health as Bar
     - [ ] Display Enemy Health as Bar
     - [ ] Display `Wave <Number>` when completed each wave
     - [ ] Display `You Win!` when completed all wave

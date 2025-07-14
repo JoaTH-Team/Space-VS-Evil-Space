@@ -1,7 +1,7 @@
 import objects.Bullet;
 import flixel.FlxSprite;
 
-function shoot(x:Float, y:Float, bullets:Array<Bullet>, state:PlayState)
+function shoot(x:Float, y:Float, bullets:Array<Bullet>)
 {
     var laser = new Bullet(x - 5, y - 10);
     laser.velocity.set(0, -1200);

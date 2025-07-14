@@ -1,6 +1,6 @@
 import objects.Bullet;
 
-function shoot(x:Float, y:Float, bullets:Array<Bullet>, state:PlayState) 
+function shoot(x:Float, y:Float, bullets:Array<Bullet>) 
 {
     var centerBullet = new Bullet(x, y - 10);
     centerBullet.velocity.set(0, -900);

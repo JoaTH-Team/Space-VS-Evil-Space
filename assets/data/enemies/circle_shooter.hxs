@@ -33,7 +33,7 @@ function shootAtPlayer() {
         var dirY = Math.sin(bulletAngle);
         
         var bullet = new Bullet(centerX, centerY);
-        bullet.power = 5;
+        bullet.power = 1;
         bullet.velocity.set(dirX * bulletSpeed, dirY * bulletSpeed);
         
         // Rotate bullet sprite to face direction

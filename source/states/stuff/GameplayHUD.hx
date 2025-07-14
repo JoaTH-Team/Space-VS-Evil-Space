@@ -1,5 +1,6 @@
 package states.stuff;
 
+import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
@@ -18,6 +19,8 @@ class GameplayHUD extends FlxSpriteGroup
 	var displayedScore:Float = 0;
 	var displayedPending:Float = 0;
 	var lerpSpeed:Float = 0.5;
+
+	var playerCard:FlxSprite;
 
     public function new() {
 		healthPlayer = CurrentData.HEALTH;
@@ -58,6 +61,8 @@ class GameplayHUD extends FlxSpriteGroup
 
     override function update(elapsed:Float) {
         super.update(elapsed);
+		healthPlayer = CurrentData.HEALTH;
+
 		displayedScore = FlxMath.lerp(displayedScore, CurrentData.SCORE, lerpSpeed);
 		displayedPending = FlxMath.lerp(displayedPending, CurrentData.PRE_SCORE, lerpSpeed);
 

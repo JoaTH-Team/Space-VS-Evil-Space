@@ -27,7 +27,7 @@ function shootAtPlayer() {
     
     var bullet:Bullet = new Bullet(enemyCenter[0] - 4, enemyCenter[1] - 4);
     bullet.velocity.set(dx, dy);
-    bullet.power = 5;
+    bullet.power = 1;
     add(bullet);
     game.enemiesBullet.push(bullet);
 }

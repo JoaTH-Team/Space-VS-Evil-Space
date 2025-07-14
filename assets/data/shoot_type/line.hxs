@@ -1,6 +1,6 @@
 import objects.Bullet;
 
-function shoot(x:Float, y:Float, bullets:Array<Bullet>, state:PlayState)
+function shoot(x:Float, y:Float, bullets:Array<Bullet>)
 {
     // At Center
     var bullet = new Bullet(x, y - 15);
