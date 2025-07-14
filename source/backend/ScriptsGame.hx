@@ -70,6 +70,27 @@ class ScriptsGame extends Iris
 				state.script.call('wave${state.curWave}', []);
 			});
 		});
+		set('displayCard', function(waveDisplay:String, ?asNumber:Int)
+		{
+			var state:PlayState = cast FlxG.state;
+			var text:String = "Wave idk";
+			if (asNumber == null)
+			{
+				text = waveDisplay;
+			}
+			else
+			{
+				text = waveDisplay + '\nWave $asNumber';
+			}
+			var text:FlxText = new FlxText(0, 0, 0, text, 32);
+			text.scrollFactor.set();
+			text.screenCenter(XY);
+			text.y -= 100;
+			state.add(text);
+
+			FlxTween.cancelTweensOf(text);
+			FlxTween.tween(text, {alpha: 0}, 1, {ease: FlxEase.sineInOut});
+		});
 	}
 
 	override function call(fun:String, ?args:Array<Dynamic>):IrisCall

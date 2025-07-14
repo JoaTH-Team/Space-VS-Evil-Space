@@ -3,6 +3,7 @@ package states.stuff;
 import flixel.group.FlxSpriteGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
+import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import global.CurrentData;
@@ -10,6 +11,8 @@ import global.CurrentData;
 class GameplayHUD extends FlxSpriteGroup
 {
     var scoreText:FlxText;
+	var healthBar:FlxBar;
+	var healthPlayer:Int = 100;
 	var pendingScoreTimer:FlxTimer;
 
 	var displayedScore:Float = 0;
@@ -17,6 +20,8 @@ class GameplayHUD extends FlxSpriteGroup
 	var lerpSpeed:Float = 0.5;
 
     public function new() {
+		healthPlayer = CurrentData.HEALTH;
+
         super();
 
 		scoreText = new FlxText(15, 15, 0, "", 18);
@@ -26,6 +31,8 @@ class GameplayHUD extends FlxSpriteGroup
 		displayedScore = CurrentData.SCORE;
 		displayedPending = CurrentData.PRE_SCORE;
 		updateDisplay();
+		healthBar = new FlxBar(scoreText.x, scoreText.height + 20, LEFT_TO_RIGHT, 100, 10, this, "healthPlayer", 0, 100, true);
+		add(healthBar);
 	}
 
 	function updateDisplay()
