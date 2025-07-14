@@ -2,21 +2,21 @@
 ## v0.1.0 (Base Release)
 - [ ] Done Sprites
     - [X] Player
-    - [ ] Enemy Shooter, Laser
+    - [X] Enemy Shooter, Laser
     - [ ] Boss For World 1
     - [ ] Select Level
     - [ ] Select World
     - [ ] Title, Menu
     - [ ] Bool Check for options
 - [ ] Done Code Player
-    - [ ] Movement
-    - [ ] Shoot Type (With 2 power, such as: Line, Little Range)
-    - [ ] Fire
+    - [X] Movement
+    - [X] Shoot Type (With 3 power, such as: Line, Little Range, Beam)
+    - [X] Fire
     - [ ] Bomb To Enemy
-- [ ] Done Code Enemy
-    - [ ] Fire to Player
-    - [ ] Do Laser to Player
-    - [ ] Movement (As Setup)
+- [X] Done Code Enemy
+    - [X] Fire to Player
+    - [X] Do Laser to Player
+    - [X] Movement (As Setup)
 - [ ] Done Code Boss
     - [ ] Have 5 Phase
     - [ ] Can Fire, Do Laser (As Setup)

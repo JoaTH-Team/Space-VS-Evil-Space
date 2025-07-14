@@ -1,5 +1,4 @@
 function create() {
-    game.curWave = 1;
     startWave(1);
 }
 
@@ -138,16 +137,122 @@ function wave7() {
         e.y = -500;
         e.screenCenter(0x01);
 
-        FlxTween.tween(e, {y: 200}, 1, {onComplete: function (_) {
-            var speed = 100;
-            e.velocity.x = speed;
-            var baseX = e.x;
+        var speed = 100;
+        e.velocity.x = speed;
+        var baseX = e.x;
 
+        FlxTween.tween(e, {y: 200}, 1, {onComplete: function (tween:FlxTween) {
             FlxG.signals.preUpdate.add(function () {
                 if (e.x <= baseX - 100) e.velocity.x = speed;
                 if (e.x >= baseX + 100) e.velocity.x = -speed;
             });
         }});
+    });
+
+    waitForWaveComplete();
+}
+
+function wave8() {
+    addEnemy("shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x -= 175;
+
+        FlxTween.tween(e, {y: 200}, 1);
+    });
+
+    addEnemy("laser_shooter_y", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x -= 125;
+
+        FlxTween.tween(e, {y: 150}, 1);
+    });
+
+    addEnemy("aim_shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 100}, 1);
+    });
+
+    addEnemy("laser_shooter_y", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x += 125;
+
+        FlxTween.tween(e, {y: 150}, 1);
+    });
+
+    addEnemy("shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x += 175;
+
+        FlxTween.tween(e, {y: 200}, 1);
+    });
+
+    waitForWaveComplete();
+}
+
+function wave9() {
+    addEnemy("aim_shooter_faster", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 150}, 1);
+    });
+
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+
+        FlxTween.tween(e, {y: 200}, 1, {onComplete: function (tween:FlxTween) {
+            var speed = 150;
+            e.velocity.x = speed;
+            var baseX = e.x;
+
+            FlxG.signals.preUpdate.add(function () {
+                if (e.x <= baseX - 200) e.velocity.x = speed;
+                if (e.x >= baseX + 200) e.velocity.x = -speed;
+            });
+        }});
+    });
+
+    waitForWaveComplete();
+}
+
+function wave10() {
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x -= 150;
+
+        FlxTween.tween(e, {y: 150}, 1);
+    });
+
+    addEnemy("circle_shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x -= 100;
+
+        FlxTween.tween(e, {y: 100}, 1);
+    });
+
+    addEnemy("circle_shooter", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x += 100;
+
+        FlxTween.tween(e, {y: 100}, 1);
+    });
+
+    addEnemy("circle_shooter_slow", function (e:Enemy) {
+        e.y = -500;
+        e.screenCenter(0x01);
+        e.x += 150;
+
+        FlxTween.tween(e, {y: 150}, 1);
     });
 
     waitForWaveComplete();
@@ -159,7 +264,7 @@ function waitForWaveComplete() {
     } else {
         trace('Wave ' + game.curWave + ' complete!');
         if (game.curWave < game.maxWave) {
-            nextWave(1.0);
+            nextWave(2.0);
         } else {
             trace("ALL WAVES COMPLETE!");
         }

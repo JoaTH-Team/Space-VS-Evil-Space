@@ -1,0 +1,43 @@
+import objects.Bullet;
+import flixel.math.FlxPoint;
+
+var shootTimer:FlxTimer;
+
+function init() {
+    enemy.loadGraphic(Paths.images("enemy_shooter"), false);
+	enemy.health = enemy.enemyScore = 10;
+    shootTimer = new FlxTimer().start(0.5, function (_) shootAtPlayer(), 0);
+}
+
+function shootAtPlayer() {
+    var enemyCenter = [enemy.x + enemy.width / 2, enemy.y + enemy.height / 2];
+
+    var dx = game.player.x + game.player.width / 2 - enemyCenter[0];
+    var dy = game.player.y + game.player.height / 2 - enemyCenter[1];
+    
+    var length = Math.sqrt(dx * dx + dy * dy);
+    if (length > 0) {
+        dx /= length;
+        dy /= length;
+    }
+    
+    var speed = 800;
+    dx *= speed;
+    dy *= speed;
+    
+    var bullet:Bullet = new Bullet(enemyCenter[0] - 4, enemyCenter[1] - 4);
+    bullet.velocity.set(dx, dy);
+    bullet.power = 5;
+    add(bullet);
+    game.enemiesBullet.push(bullet);
+}
+
+function cleanUp() {
+    if (shootTimer != null) {
+        shootTimer.cancel();
+    }
+}
+
+function destroy() {
+    cleanUp();
+}
