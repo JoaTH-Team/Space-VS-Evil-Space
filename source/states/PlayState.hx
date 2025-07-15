@@ -100,8 +100,11 @@ class PlayState extends FlxState
 				bullet.destroy();
 				continue;
 			}
+		}
 
-			for (enemy in enemies)
+		for (enemy in enemies)
+		{
+			for (bullet in bullets)
 			{
 				if (bullet.overlaps(enemy))
 				{
@@ -117,7 +120,6 @@ class PlayState extends FlxState
 					{
 						enemy.hit();
 					}
-
 					remove(bullet);
 					bullets.remove(bullet);
 					bullet.destroy();

@@ -7,6 +7,7 @@ function shoot(x:Float, y:Float, bullets:Array<Bullet>)
     bullet.velocity.set(0, -800);
     bullet.color = FlxColor.RED;
     bullet.power = 2;
+    bullet.makeGraphic(8, 8, FlxColor.RED);
     add(bullet);
     bullets.push(bullet);
 
@@ -15,6 +16,7 @@ function shoot(x:Float, y:Float, bullets:Array<Bullet>)
     bullet.velocity.set(0, -800);
     bullet.color = FlxColor.RED;
     bullet.power = 2;
+    bullet.makeGraphic(8, 8, FlxColor.RED);
     add(bullet);
     bullets.push(bullet);
 
@@ -22,6 +24,7 @@ function shoot(x:Float, y:Float, bullets:Array<Bullet>)
     bullet.velocity.set(0, -800);
     bullet.color = FlxColor.RED;
     bullet.power = 2;
+    bullet.makeGraphic(8, 8, FlxColor.RED);
     add(bullet);
     bullets.push(bullet);
 }

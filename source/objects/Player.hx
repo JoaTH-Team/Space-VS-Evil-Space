@@ -20,24 +20,7 @@ class Player extends FlxSprite
     }    
 
     public function dead(?trulyDead:Bool) {
-        FlxTween.tween(this, {alpha: 0}, 1, {ease: FlxEase.sineInOut, onComplete: function (_) {
-            if (trulyDead) {
-                this.kill();
-				}
-				else
-				{
-					revive();
-				}
-        }});
-    }
-
-	override function revive()
-	{
-		super.revive();
-
-		FlxTween.tween(this, {alpha: 1}, 1, {
-			ease: FlxEase.sineInOut
-		});
+		FlxTween.tween(this, {alpha: 0}, 1, {ease: FlxEase.sineInOut});
 	}
 
 	var invulnerable:Bool = false;
