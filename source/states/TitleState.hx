@@ -1,8 +1,6 @@
 package states;
 
-import flixel.FlxState;
-
-class TitleState extends FlxState
+class TitleState extends StateCreation
 {
     override function create() {
         super.create();

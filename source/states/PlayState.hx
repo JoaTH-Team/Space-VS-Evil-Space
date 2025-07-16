@@ -3,7 +3,7 @@ package states;
 import backend.ScriptsGame;
 import backend.ScriptsStage;
 import flixel.FlxG;
-import flixel.FlxState;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import global.CurrentData;
 import objects.Bullet;
@@ -11,7 +11,7 @@ import objects.Enemy;
 import objects.Player;
 import states.stuff.GameplayHUD;
 
-class PlayState extends FlxState
+class PlayState extends StateCreation
 {
 	public var player:Player;
 	public var bullets:Array<Bullet> = [];
@@ -64,6 +64,20 @@ class PlayState extends FlxState
 	{
 		callFunction("update", [elapsed]);
 		super.update(elapsed);
+
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			persistentUpdate = false;
+			FlxTimer.globalManager.forEach(function(time:FlxTimer)
+			{
+				time.active = false;
+			});
+			FlxTween.globalManager.forEach(function(tween:FlxTween)
+			{
+				tween.active = false;
+			});
+			openSubState(new substates.PauseSubState());
+		}
 
 		if (player.allowMove && FlxG.keys.pressed.Z && shootTimer.finished)
 		{

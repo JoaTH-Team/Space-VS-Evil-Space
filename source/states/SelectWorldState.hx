@@ -1,8 +1,6 @@
 package states;
 
-import flixel.FlxState;
-
-class SelectWorldState extends FlxState
+class SelectWorldState extends StateCreation
 {
     override function create() {
         super.create();

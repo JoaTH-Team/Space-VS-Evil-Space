@@ -1,20 +1,15 @@
 package states;
 
 import flixel.FlxG;
-import flixel.FlxState;
 import flixel.util.FlxTimer;
 import global.SaveData;
 
-class InitState extends FlxState
+class InitState extends StateCreation
 {
     override function create() {
         super.create();
 
-        SaveData.init();
-    
-		new FlxTimer().start(0.25, function(timer:FlxTimer)
-		{
-            FlxG.switchState(() -> new PlayState());
-        });
+		SaveData.init();
+		FlxG.switchState(() -> new PlayState());
     }
 }
