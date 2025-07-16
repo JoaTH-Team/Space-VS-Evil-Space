@@ -46,8 +46,7 @@ class MenuState extends FlxState
                     FlxG.switchState(() -> new SelectLevelState());
                 case 1: // Options
 
-                case 2: // Exit Game
-                    Application.current.window.alert("Game will now exit", "Note");
+				case 2: // Exit Game
                     Sys.exit(0);
             }
         }

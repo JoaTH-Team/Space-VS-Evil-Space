@@ -33,8 +33,7 @@ class GameCounter extends TextField
     public function update(elapsed:Float):Void
     {
         _times.push(openfl.Lib.getTimer());
-        
-        // Remove frames older than 1 second
+
         while (_times[0] < openfl.Lib.getTimer() - 1000)
         {
             _times.shift();

@@ -33,6 +33,6 @@
     - [ ] Add Bool Check for Options: Run as 120FPS, FullScreen
     - [ ] Nagative Thought Up/Down
     - [ ] Can be toggle options thought Enter
-- [ ] Done Code Title Menu
-    - [ ] Display Logo game
+- [X] Done Code Title Menu
+    - [X] Display Logo game
     - [X] Display `Press ANY Key to begin` when done display logo

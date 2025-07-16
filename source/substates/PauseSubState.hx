@@ -6,6 +6,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import global.GroupCreation;
+import states.MenuState;
 
 class PauseSubState extends FlxSubState
 {
@@ -57,6 +58,7 @@ class PauseSubState extends FlxSubState
                 case 1: // Restart
                     FlxG.resetGame();
                 case 2: // Return to menu
+					FlxG.switchState(() -> new MenuState());
             }
         }
     }

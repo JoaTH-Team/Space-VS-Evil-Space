@@ -35,6 +35,7 @@ class GameplayHUD extends FlxSpriteGroup
 		displayedPending = CurrentData.PRE_SCORE;
 		updateDisplay();
 		healthBar = new FlxBar(scoreText.x, scoreText.height + 20, LEFT_TO_RIGHT, 100, 10, this, "healthPlayer", 0, 100, true);
+		healthBar.setSize(1.25, 1.25);
 		add(healthBar);
 	}
 
