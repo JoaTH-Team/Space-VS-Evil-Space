@@ -42,7 +42,6 @@ class PlayState extends StateCreation
 		player = new Player(0, FlxG.height - 100);
 		player.screenCenter(X);
 		add(player);
-		Player.shootType = LINE;
 
 		script = new ScriptsGame('$curStage/scripts/$curScript');
 		shootScript = new ScriptsGame('shoot_type/$curShootScript');

@@ -29,6 +29,7 @@ class PauseSubState extends FlxSubState
         }
         menuGroup.setPosition(50, FlxG.height / 2 - (listArray.length * 60) / 2);
         add(menuGroup.group);
+		menuGroup.updateSelection();
     }
 
     override function update(elapsed:Float) {

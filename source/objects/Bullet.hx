@@ -5,26 +5,36 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 
-enum BulletType {
-    LINE;
-    LITTLE_RANGE;
-}
-
 class Bullet extends FlxSprite
 {
-	public var power:Int = 1;
+	public var power:Int = 10;
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-		makeGraphic(8, 8, FlxColor.WHITE);
-		power = 10;
-		velocity.x = 800;
 
-		doTween();
+		makeGraphic(8, 8, FlxColor.WHITE);
+		velocity.x = 800;
+		FlxTween.color(this, 0.5, FlxColor.WHITE, FlxColor.BROWN, {
+			ease: FlxEase.linear,
+			type: PINGPONG,
+			loopDelay: 0.1
+		});
 	}
-	function doTween()
+
+	override public function update(elapsed:Float):Void
 	{
-		FlxTween.color(this, 0.25, FlxColor.WHITE, FlxColor.BROWN, {ease: FlxEase.linear, type: ONESHOT});
+		super.update(elapsed);
+
+		if (!isOnScreen())
+		{
+			kill();
+		}
+	}
+
+	override public function kill():Void
+	{
+		FlxTween.cancelTweensOf(this);
+		super.kill();
 	}
 }

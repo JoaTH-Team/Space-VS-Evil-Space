@@ -8,12 +8,9 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import global.CurrentData;
-import objects.Bullet.BulletType;
 
 class Player extends FlxSprite
 {
-	public static var shootType:BulletType;
-
     public function new(x:Float = 0, y:Float = 0) {
         super(x, y);
 		loadGraphic(Paths.images("player"), false);
