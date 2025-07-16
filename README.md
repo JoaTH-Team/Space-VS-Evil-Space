@@ -1,5 +1,5 @@
 # Bullet Hell Warp
-![Logo game](assets/images/title_game.png)
+<p align="center"><img src="logo.png" alt="Logo Forreal Engine" width="60%"></p>
 
 A shoot 'em up game, you will be a normal space ship come with fire feature, gotta fight other evil space cause they cross you and make war to you for absolute no reason
 
