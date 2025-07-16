@@ -1,6 +1,6 @@
 package states;
 
-class SelectWorldState extends StateCreation
+class SelectLevelState extends StateCreation
 {
     override function create() {
         super.create();

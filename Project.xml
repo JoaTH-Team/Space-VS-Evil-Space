@@ -4,7 +4,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Space VS Evil Space" file="Space VS Evil Space" main="backend.Main" version="0.0.1" company="JoaTH Team" />
+	<app title="Bullet Hell Warp" file="game" main="backend.Main" version="0.0.1" company="JoaTH Team" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->

@@ -1,7 +1,6 @@
 package states;
 
 import flixel.FlxG;
-import flixel.util.FlxTimer;
 import global.SaveData;
 
 class InitState extends StateCreation
@@ -10,6 +9,6 @@ class InitState extends StateCreation
         super.create();
 
 		SaveData.init();
-		FlxG.switchState(() -> new PlayState());
+		FlxG.switchState(() -> new TitleState());
     }
 }

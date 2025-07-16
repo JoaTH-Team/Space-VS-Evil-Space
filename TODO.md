@@ -27,12 +27,12 @@
     - [ ] Display `Wave <Number>` when completed each wave
     - [ ] Display `You Win!` when completed all wave
 - [ ] Done Code Menu
-    - [ ] Nagative Thought Up/Down
-    - [ ] Switch to Options, Credits, Play and Exit game thought Enter
+    - [X] Nagative Thought Up/Down
+    - [ ] Switch to Options, Play and Exit game thought Enter
 - [ ] Done Code Options Menu
     - [ ] Add Bool Check for Options: Run as 120FPS, FullScreen
     - [ ] Nagative Thought Up/Down
     - [ ] Can be toggle options thought Enter
 - [ ] Done Code Title Menu
     - [ ] Display Logo game
-    - [ ] Display `Press ANY Key to begin` when done display logo
+    - [X] Display `Press ANY Key to begin` when done display logo
